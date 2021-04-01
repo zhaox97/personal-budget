@@ -51,11 +51,11 @@
       </tbody>
     </table>
     <ApexChart
-      width="360"
+      width="260"
       type="donut"
       :options="{
-        labels: ['One', 'Two', 'Three'],
-        series: [10, 15, 90],
+        labels: expenseByCategory.map((forDonut) => forDonut.category),
+        series: expenseByCategory.map((sweets) => sweets.amount),
       }"
     ></ApexChart>
   </div>
@@ -68,7 +68,7 @@ import { QuerySnapshot } from "@firebase/firestore-types";
 import { QueryDocumentSnapshot } from "@firebase/firestore-types";
 import ApexChart from "vue-apexcharts";
 
-@Component({components: {ApexChart}})
+@Component({ components: { ApexChart } })
 export default class MyExpense extends Vue {
   readonly $appDB!: FirebaseFirestore;
   private allCategories: any[] = [];
