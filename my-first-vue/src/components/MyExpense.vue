@@ -1,7 +1,9 @@
 <template>
-  <div class="myExpense">
-    <h2>Enter Your Spending Details</h2>
-    Amount <input type="number" v-model.number="spendingAmount" /> <br />
+  <div id="top">
+    <section>
+      <h3>Enter your Spending Details</h3>
+      <!-- the input fields and buttons -->
+      Amount <input type="number" v-model.number="spendingAmount" /> <br />
     Date <input type="date" v-model="spendingDate" /><br />
     Where <input type="text" v-model="spendingPlace" /><br />
     Category
@@ -11,8 +13,11 @@
       }}</option> </select
     ><br />
     <button v-on:click="addExpense">Save</button> <br />
-    <h2>Expenses</h2>
-    <table>
+    </section>
+    <section>
+      <h3>Expenses</h3>
+      <!-- the 4-column expense details table goes here -->
+      <table>
       <thead>
         <tr>
           <th>Date</th>
@@ -30,8 +35,11 @@
         </tr>
       </tbody>
     </table>
-    <h2>Spending Summary</h2>
-    <table>
+    </section>
+    <section>
+      <h3>Spending Summary</h3>
+      <!-- the 4-column expense summary table goes here -->
+      <table>
       <thead>
         <tr>
           <th>Category</th>
@@ -50,6 +58,7 @@
         </tr>
       </tbody>
     </table>
+    </section>
     <ApexChart
       width="260"
       type="donut"
@@ -154,5 +163,22 @@ table,
 th,
 td {
   border: 1px solid black;
+}
+#top {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  grid-template-areas: "input summary" "donut expenses";
+}
+#top > section:nth-child(1) {
+  grid-area: input;
+}
+#top > section:nth-child(2) {
+  grid-area: expenses;
+}
+#top > section:nth-child(3) {
+  grid-area: summary;
+}
+#top > :nth-child(4) {
+  grid-area: donut;
 }
 </style>
