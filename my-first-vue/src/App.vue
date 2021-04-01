@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <h1>Personal Budget</h1>
-    <img alt="Vue logo" src="./assets/logo.png">
+    <img alt="Vue logo" src="./assets/personalbud.jpg">
     <h2>Xianghe Zhao</h2>
+    <AppLogin/>
     <BudgetCategory/>
     <MyExpense/>
   </div>
@@ -12,12 +13,12 @@
 import { Component, Vue } from 'vue-property-decorator';
 import BudgetCategory from './components/BudgetCategory.vue';
 import MyExpense from './components/MyExpense.vue';
-import {FirebaseFirestore} from "@firebase/firestore-types"
-
+import AppLogin from './components/AppLogin.vue';
+import {FirebaseFirestore} from "@firebase/firestore-types";
 
 @Component({
   components: {
-    BudgetCategory, MyExpense,
+    BudgetCategory, MyExpense, AppLogin,
   },
 })
 export default class App extends Vue {
