@@ -76,6 +76,7 @@ import { FirebaseFirestore } from "@firebase/firestore-types";
 import { QuerySnapshot } from "@firebase/firestore-types";
 import { QueryDocumentSnapshot } from "@firebase/firestore-types";
 import ApexChart from "vue-apexcharts";
+import { FirebaseAuth } from "@firebase/auth-types";
 
 @Component({ components: { ApexChart } })
 export default class MyExpense extends Vue {
@@ -87,11 +88,13 @@ export default class MyExpense extends Vue {
   private spendingCategory = "";
   private spendingPlace = "";
   private expenseByCategory: any[] = [];
-
+  readonly $appAuth!: FirebaseAuth;
+  private uid = "none";
   mounted(): void {
+    this.uid = this.$appAuth.currentUser?.uid ?? "none";
     const groupedTotal = new Map<string, number>();
     this.$appDB
-      .collection("users/me/categories")
+      .collection(`users/${this.uid}/categories`)
       .orderBy("name") // Sort by category name
       .onSnapshot((qs: QuerySnapshot) => {
         this.allCategories.splice(0); // remove old data
@@ -106,7 +109,7 @@ export default class MyExpense extends Vue {
         });
       });
     this.$appDB
-      .collection("users/me/expenses")
+      .collection(`users/${this.uid}/expenses`)
       .orderBy("date") // Sort by category name
       .onSnapshot((qs: QuerySnapshot) => {
         this.allExpenses.splice(0); // remove old data
@@ -149,7 +152,7 @@ export default class MyExpense extends Vue {
       });
   }
   addExpense(): void {
-    this.$appDB.collection("users/me/expenses").add({
+    this.$appDB.collection(`users/${this.uid}/expenses`).add({
       amount: this.spendingAmount,
       date: this.spendingDate,
       category: this.spendingCategory,

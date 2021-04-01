@@ -17,7 +17,9 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { FirebaseAuth } from "@firebase/auth-types";
-import {UserCredential} from "@firebase/auth-types"
+import {UserCredential} from "@firebase/auth-types";
+import VueRouter, { RouteConfig } from "vue-router";
+
 @Component
 export default class AppLogin extends Vue {
   readonly $appAuth!: FirebaseAuth;
@@ -32,21 +34,25 @@ export default class AppLogin extends Vue {
       .createUserWithEmailAndPassword(this.userEmail, this.userPassword)
       .then((u: UserCredential) => {
         this.showMessage(`User create UID ${u.user?.uid}`);
+        this.$router.push({ path: "/category" });
       })
       .catch((err: any) => {
         this.showMessage(`Unable to create account ${err}`);
       });
+      
   }
-
+  
   authenticate(): void {
     this.$appAuth
       .signInWithEmailAndPassword(this.userEmail, this.userPassword)
       .then((u: UserCredential) => {
         this.showMessage(`Login successful UID ${u.user?.uid}`);
+        this.$router.push({path: "/expenses"});
       })
       .catch((err: any) => {
         this.showMessage(`Unable to login ${err}`);
       });
+      
   }
   showMessage(m: string): void {
     this.message = m;

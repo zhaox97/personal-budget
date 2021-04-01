@@ -27,6 +27,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import {FirebaseFirestore} from "@firebase/firestore-types"
 import { QuerySnapshot } from '@firebase/firestore-types';
 import { QueryDocumentSnapshot } from '@firebase/firestore-types';
+import { FirebaseAuth } from "@firebase/auth-types";
 
 @Component
 export default class BudgetCategory extends Vue {
@@ -34,9 +35,12 @@ export default class BudgetCategory extends Vue {
   private budgetCategory = "";
   private budgetLimit = 50;
   private allCategories: any[] = [];
+  readonly $appAuth!: FirebaseAuth;
+private uid = "none"
   mounted(): void {
+    this.uid = this.$appAuth.currentUser?.uid ?? "none";
     this.$appDB
-    .collection("users/me/categories")
+    .collection(`users/${this.uid}/categories`)
     .orderBy("name")       // Sort by category name
     .onSnapshot((qs: QuerySnapshot) => {
       this.allCategories.splice(0);  // remove old data
@@ -53,7 +57,7 @@ export default class BudgetCategory extends Vue {
   }
   saveCategory(): void{
       this.$appDB
-        .collection("users/me/categories")
+        .collection(`users/${this.uid}/categories`)
         .add({name: this.budgetCategory, monthlyLimit: this.budgetLimit})
     }
 }

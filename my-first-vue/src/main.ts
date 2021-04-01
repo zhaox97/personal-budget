@@ -6,8 +6,7 @@ import 'firebase/storage'
 import 'firebase/analytics'
 import VueApexCharts from "vue-apexcharts";
 import "firebase/auth"; 
-Vue.use(VueApexCharts);
-
+import { AppRouter } from "./app-routing";
 const firebaseConfig = {
   apiKey: "AIzaSyCATabdmIkNiPRhMR6DJypzKBAkTgLc6S8",
   authDomain: "personal-budget-9a006.firebaseapp.com",
@@ -21,10 +20,13 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 Vue.prototype.$appDB = firebase.firestore();
 Vue.config.productionTip = false
+Vue.use(VueApexCharts)
 
+Vue.component('apexchart', VueApexCharts)
 // import "firebase/auth";    // This line may (not) be needed
 Vue.prototype.$appAuth = firebase.auth();
 new Vue({
-  render: h => h(App),
+  router: AppRouter, 
+  render: (h) => h(App),
 }).$mount('#app')
 
