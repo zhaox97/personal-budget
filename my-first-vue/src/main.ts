@@ -5,6 +5,7 @@ import "firebase/firestore"
 import 'firebase/storage'
 import 'firebase/analytics'
 import VueApexCharts from "vue-apexcharts";
+import "firebase/auth"; 
 Vue.use(VueApexCharts);
 
 const firebaseConfig = {
@@ -20,6 +21,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 Vue.prototype.$appDB = firebase.firestore();
 Vue.config.productionTip = false
+
+// import "firebase/auth";    // This line may (not) be needed
+Vue.prototype.$appAuth = firebase.auth();
 new Vue({
   render: h => h(App),
 }).$mount('#app')
